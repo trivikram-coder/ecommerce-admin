@@ -21,7 +21,7 @@ export default function ProductAdd() {
   const handleSubmit = async(e) => {
     e.preventDefault();
     console.log("Form Data:", formData);
-    const response=await fetch("http://localhost:9000/products/add",{
+    const response=await fetch("https://spring-java-server.onrender.com/products/add",{
         method:"POST",
         headers:{
             "content-type":"application/json"

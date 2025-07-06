@@ -37,7 +37,7 @@ const Dashboard = () => {
   // Fetch all products
   useEffect(() => {
     axios
-      .get('http://localhost:9000/products/get')
+      .get('https://spring-java-server.onrender.com/products/get')
       .then((res) => setProducts(res.data))
       .catch((err) => toast.error("Error fetching products"));
   }, []);
@@ -58,7 +58,7 @@ const Dashboard = () => {
       quantity: parseInt(form.quantity),
     };
     try {
-      const res = await axios.post('http://localhost:9000/products/add', newProduct);
+      const res = await axios.post('https://spring-java-server.onrender.com/products/add', newProduct);
       setProducts([...products, ...res.data]);
       toast.success("Product added successfully!");
       setForm(initialFormState);
@@ -75,7 +75,7 @@ const Dashboard = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:9000/products/update/${form.id}`, form);
+      await axios.put(`https://spring-java-server.onrender.com/products/update/${form.id}`, form);
       setProducts(products.map((p) => (p.id === form.id ? form : p)));
       toast.success("Product updated successfully!");
       setForm(initialFormState);
@@ -87,7 +87,7 @@ const Dashboard = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:9000/products/delete/${id}`);
+      await axios.delete(`https://spring-java-server.onrender.com/products/delete/${id}`);
       setProducts(products.filter((p) => p.id !== id));
       toast.success("Product deleted");
     } catch (err) {
