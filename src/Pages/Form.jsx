@@ -38,7 +38,7 @@ const Form = () => {
     if (!validateForm()) return;
 
     try {
-      const response = await fetch("https://backend-server-3-ycun.onrender.com/admin/login", {
+      const response = await fetch("https://spring-server-0m1e.onrender.com/admin/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
