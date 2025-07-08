@@ -40,6 +40,7 @@ const Form = () => {
     try {
       const response = await fetch("https://spring-server-0m1e.onrender.com/admin/login", {
         method: "POST",
+        credentials:"include",
         headers: {
           "Content-Type": "application/json"
         },
