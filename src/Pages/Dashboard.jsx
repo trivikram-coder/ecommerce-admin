@@ -37,7 +37,7 @@ const Dashboard = () => {
   // Fetch all products
   useEffect(() => {
     axios
-      .get('https://spring-server-0m1e.onrender.com/products/get')
+      .get('https://spring-server-0m1e.onrender.com/products/get',{withCredentials:true})
       .then((res) => setProducts(res.data))
       .catch((err) => toast.error("Error fetching products"));
   }, []);

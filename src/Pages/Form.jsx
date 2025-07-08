@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useNavigate } from 'react-router-dom';
+import { data, useNavigate } from 'react-router-dom';
 import {ShoppingBag} from 'lucide-react'
 import { toast } from 'react-toastify';
 const Form = () => {
@@ -47,26 +47,34 @@ const Form = () => {
         body: JSON.stringify({ email, password })
       });
 
-      // const data = await response.json();
+      const data = await response.json();
       
       if (response.ok) {
-        toast.success("Sign in successfully")
-       
-        // localStorage.setItem("adminData",JSON.stringify(data));
-        
-        navigate("/dashboard")
-        // if (rememberMe) {
-        //   localStorage.setItem("adminToken", data.token);
-        // } else {
-        //   sessionStorage.setItem("adminToken", data.token);
-        // }
-        // Redirect if needed
-        // navigate("/admin/dashboard");
+      toast.success("Sign in successfully")
+                    
+        localStorage.setItem("token",data.token);
+      const token=data.token;
+      const userDetails=await fetch("https://spring-server-0m1e.onrender.com/admin/details",{
+      headers:{
+      'Authorization':`Bearer ${token}`,
+      'Accept':'application/json'
+      }
+      })
+      const res=userDetails.json()
+      if(userDetails.ok){
+        localStorage.setItem("user",JSON.stringify(res))
+              
+      }
+      else{
+        toast.error("Failed to fetch user info");
+        }
+      navigate("/dashboard")
+                      
       } else {
         toast.error("Failed to sign in")
         setResMessage(data.message || "Login failed ❌");
       }
-
+      
     } catch (error) {
       console.error("Login Error:", error);
       setResMessage("Something went wrong. Try again later.");
