@@ -47,19 +47,19 @@ const Form = () => {
         body: JSON.stringify({ email, password })
       });
 
-      const data = await response.json();
+      // const data = await response.json();
       
       if (response.ok) {
         toast.success("Sign in successfully")
        
-        localStorage.setItem("adminData",JSON.stringify(data));
+        // localStorage.setItem("adminData",JSON.stringify(data));
         
         navigate("/dashboard")
-        if (rememberMe) {
-          localStorage.setItem("adminToken", data.token);
-        } else {
-          sessionStorage.setItem("adminToken", data.token);
-        }
+        // if (rememberMe) {
+        //   localStorage.setItem("adminToken", data.token);
+        // } else {
+        //   sessionStorage.setItem("adminToken", data.token);
+        // }
         // Redirect if needed
         // navigate("/admin/dashboard");
       } else {
