@@ -68,7 +68,7 @@ const Form = () => {
         if (userDetails.ok) {
           const res = await userDetails.json();
           const { password, ...safeUser } = res;
-          localStorage.setItem("user", JSON.stringify(safeUser));
+          localStorage.setItem("adminData", JSON.stringify(safeUser));
           setTimeout(() => navigate("/dashboard"), 50);
         } else {
           toast.error("Failed to fetch user info");

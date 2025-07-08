@@ -25,7 +25,7 @@ const Dashboard = () => {
 
   // Get admin data from localStorage
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem('user'));
+    const data = JSON.parse(localStorage.getItem('adminData'));
     if (!data) {
       toast.error("Session expired. Please login again.");
       navigate('/');
