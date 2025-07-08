@@ -52,7 +52,7 @@ const Form = () => {
       if (response.ok) {
       toast.success("Sign in successfully")
                     
-        localStorage.setItem("token",data.token);
+      localStorage.setItem("token",data.token);
       const token=data.token;
       const userDetails=await fetch("https://spring-server-0m1e.onrender.com/admin/details",{
       headers:{
@@ -60,7 +60,7 @@ const Form = () => {
       'Accept':'application/json'
       }
       })
-      const res=userDetails.json()
+      const res=await userDetails.json()
       if(userDetails.ok){
         localStorage.setItem("user",JSON.stringify(res))
               
