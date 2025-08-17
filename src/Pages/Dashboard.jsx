@@ -1,6 +1,6 @@
 import { ShoppingBag } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
@@ -9,7 +9,7 @@ const Dashboard = () => {
   const [admin, setAdmin] = useState({ name: '', email: '' });
   const [products, setProducts] = useState([]);
   const [editing, setEditing] = useState(false);
- 
+ const[users,setUsers]=useState([])
   const initialFormState = {
     id: '',
     title: '',
@@ -34,67 +34,9 @@ const Dashboard = () => {
     }
   }, [navigate]);
 
-  // Fetch all products
-  useEffect(() => {
-    axios
-      .get('https://spring-server-0m1e.onrender.com/products/get',{withCredentials:true})
-      .then((res) => setProducts(res.data))
-      .catch((err) => toast.error("Error fetching products"));
-  }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-  };
 
-  const handleAdd = async (e) => {
-    e.preventDefault();
-    const newProduct = {
-      ...form,
-      id: parseInt(form.id),
-      price: parseFloat(form.price),
-      discountPrice: parseFloat(form.discountPrice),
-      rating: parseFloat(form.rating),
-      quantity: parseInt(form.quantity),
-    };
-    try {
-      const res = await axios.post('https://spring-server-0m1e.onrender.com/products/add', newProduct);
-      setProducts([...products, ...res.data]);
-      toast.success("Product added successfully!");
-      setForm(initialFormState);
-    } catch (err) {
-      toast.error("Failed to add product");
-    }
-  };
-
-  const handleEdit = (product) => {
-    setForm(product);
-    setEditing(true);
-  };
-
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.put(`https://spring-server-0m1e.onrender.com/products/update/${form.id}`, form);
-      setProducts(products.map((p) => (p.id === form.id ? form : p)));
-      toast.success("Product updated successfully!");
-      setForm(initialFormState);
-      setEditing(false);
-    } catch (err) {
-      toast.error("Failed to update product");
-    }
-  };
-
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`https://spring-server-0m1e.onrender.com/products/delete/${id}`);
-      setProducts(products.filter((p) => p.id !== id));
-      toast.success("Product deleted");
-    } catch (err) {
-      toast.error("Failed to delete product");
-    }
-  };
-
+  
   const handleSignOut = () => {
     localStorage.removeItem("adminData");
     toast.info("Logged out");
@@ -118,60 +60,21 @@ const Dashboard = () => {
       </div>
 
       {/* Add or Update Product Form */}
-      <div className="card mb-4">
-        <div className="card-body">
-          <h5 className="card-title">{editing ? "Update Product" : "Add Product"}</h5>
-          <form onSubmit={editing ? handleUpdate : handleAdd}>
-            <div className="row">
-              {[
-                { label: "Id", name: "id", type: "number" },
-                { label: "Title", name: "title" },
-                { label: "Price", name: "price", type: "number" },
-                { label: "Discount Price", name: "discountPrice", type: "number" },
-                { label: "Description", name: "description" },
-                { label: "Category", name: "category" },
-                { label: "Image URL", name: "image" },
-                { label: "Rating", name: "rating", type: "number" },
-                { label: "Quantity", name: "quantity", type: "number" },
-              ].map(({ label, name, type = "text" }) => (
-                <div className="col-md-4 mb-3" key={name}>
-                  <label className="form-label">{label}</label>
-                  <input
-                    type={type}
-                    name={name}
-                    className="form-control"
-                    value={form[name]}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-              ))}
-            </div>
-            <button type="submit" className="btn btn-primary me-2">
-              {editing ? "Update" : "Add"}
-            </button>
-            {editing && (
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={() => {
-                  setEditing(false);
-                  setForm(initialFormState);
-                }}
-              >
-                Cancel
-              </button>
-            )}
-          </form>
-        </div>
-      </div>
+   
+  <div className="card mb-4 mt-4 shadow-lg border-0" style={{ borderRadius: "15px" }}>
+    <div className="card-body d-flex flex-column align-items-center justify-content-center bg-primary text-white" style={{ borderRadius: "15px" }}>
+      <h5 className="card-title mb-3 fw-bold">📦 Products Data</h5>
+       <Link to="/products" style={{ textDecoration: "none" }} className="btn btn-light text-primary fw-semibold px-4 py-2 rounded-pill shadow-sm">
+        Open
+        </Link>
+      
+    </div>
+  </div>
 
-      {/* Product Table */}
-      <div className="card">
-        <div className="card-body">
-          <h5 className="card-title">Product List</h5>
-          <div className="table-responsive">
-            <table className="table table-bordered table-hover">
+
+      {/* Users data */}
+      {/* <div className='table-responsive'>
+         <table className="table table-bordered table-hover">
               <thead className="table-light">
                 <tr>
                   <th>#</th>
@@ -185,8 +88,8 @@ const Dashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {products.length > 0 ? (
-                  products.map((p, index) => (
+                {users.length > 0 ? (
+                  users.map((p, index) => (
                     <tr key={p.id}>
                       <td>{index + 1}</td>
                       <td>{p.title}</td>
@@ -208,9 +111,7 @@ const Dashboard = () => {
                 )}
               </tbody>
             </table>
-          </div>
-        </div>
-      </div>
+      </div> */}
     </div>
   );
 };
