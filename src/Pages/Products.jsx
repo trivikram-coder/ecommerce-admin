@@ -18,13 +18,18 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [form, setForm] = useState(initialFormState);
   const [editing, setEditing] = useState(false);
-
+  const[filtered,setFiltered]=useState([])
+  const[name,setName]=useState('');
   useEffect(() => {
     axios
       .get("https://spring-server-0m1e.onrender.com/products/get", {
         withCredentials: true,
       })
-      .then((res) => setProducts(res.data))
+      .then((res) => {
+        setProducts(res.data)
+        setFiltered(res.data)
+      }
+    )
       .catch(() => toast.error("Error fetching products"));
   }, []);
 
@@ -32,7 +37,10 @@ const Products = () => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
-
+  const handleSearch=(name)=>{
+    const results=name===''?filtered:filtered.filter((item)=> item.title.toLowerCase().includes(name.toLowerCase()))
+    setProducts(results)
+  }
   const handleAdd = async (e) => {
     e.preventDefault();
     const newProduct = {
@@ -144,8 +152,33 @@ const Products = () => {
           </form>
         </div>
       </div>
+{/* Search Bar */}
+<div
+  className="search-bar-container d-flex align-items-center justify-content-center mb-4"
+>
+  <div className="search-box d-flex align-items-center gap-2 shadow-sm p-2 rounded-4 bg-white">
+    <input
+      type="text"
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") handleSearch(name);
+      }}
+      className="form-control border-0 shadow-none fs-5"
+      placeholder="🔍 Search for products..."
+      style={{ width: "400px", background: "transparent" }}
+    />
+    <button
+      className="btn btn-success px-4 rounded-3 fw-semibold"
+      onClick={() => handleSearch(name)}
+      type="button"
+    >
+      Search
+    </button>
+  </div>
+</div>
 
-      {/* Product Table */}
+{/* Product Table */}
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">Product List</h5>
@@ -169,8 +202,8 @@ const Products = () => {
                     <tr key={p.id}>
                       <td>{index + 1}</td>
                       <td>{p.title}</td>
-                      <td>${p.price}</td>
-                      <td>${p.discountPrice}</td>
+                      <td>₹{p.price}</td>
+                      <td>₹{p.discountPrice}</td>
                       <td>{p.category}</td>
                       <td>{p.quantity}</td>
                       <td>

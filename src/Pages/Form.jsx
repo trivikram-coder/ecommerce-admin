@@ -130,6 +130,7 @@ const Form = () => {
                 >
                   {showPassword ? "🔒" : "👁️"}
                 </button>
+                
               </div>
               {errors.password && <div className="invalid-feedback d-block">{errors.password}</div>}
             </div>
