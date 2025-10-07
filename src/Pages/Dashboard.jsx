@@ -1,4 +1,4 @@
-import { ShoppingBag } from 'lucide-react';
+import { ShoppingBag, User, Users } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useNavigate,Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -10,6 +10,7 @@ const Dashboard = () => {
   const [products, setProducts] = useState([]);
   const [editing, setEditing] = useState(false);
  const[users,setUsers]=useState([])
+ 
   const initialFormState = {
     id: '',
     title: '',
@@ -70,48 +71,18 @@ const Dashboard = () => {
       
     </div>
   </div>
+<div className="card mb-4 mt-4 shadow-lg border-0" style={{ borderRadius: "15px" }}>
+    <div className="card-body d-flex flex-column align-items-center justify-content-center bg-success text-white" style={{ borderRadius: "15px" }}>
+      <h5 className="card-title mb-3 fw-bold"><Users size={18}/> Users data</h5>
+       <Link to="/users" style={{ textDecoration: "none" }} className="btn btn-light text-primary fw-semibold px-4 py-2 rounded-pill shadow-sm">
+        Open
+        </Link>
+      
+    </div>
+  </div>
 
-
-      {/* Users data */}
-      {/* <div className='table-responsive'>
-         <table className="table table-bordered table-hover">
-              <thead className="table-light">
-                <tr>
-                  <th>#</th>
-                  <th>Title</th>
-                  <th>Price</th>
-                  <th>Discount</th>
-                  <th>Category</th>
-                  <th>Quantity</th>
-                  <th>Image</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.length > 0 ? (
-                  users.map((p, index) => (
-                    <tr key={p.id}>
-                      <td>{index + 1}</td>
-                      <td>{p.title}</td>
-                      <td>${p.price}</td>
-                      <td>${p.discountPrice}</td>
-                      <td>{p.category}</td>
-                      <td>{p.quantity}</td>
-                      <td>
-                        {p.image ? <img src={p.image} alt="product" width="50" /> : "N/A"}
-                      </td>
-                      <td>
-                        <button className="btn btn-warning btn-sm me-2" onClick={() => handleEdit(p)}>Edit</button>
-                        <button className="btn btn-danger btn-sm" onClick={() => handleDelete(p.id)}>Delete</button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr><td colSpan="8" className="text-center">No products found.</td></tr>
-                )}
-              </tbody>
-            </table>
-      </div> */}
+     
+    
     </div>
   );
 };
