@@ -186,7 +186,7 @@ const Products = () => {
             <table className="table table-bordered table-hover">
               <thead className="table-light">
                 <tr>
-                  <th>#</th>
+                  <th>Id</th>
                   <th>Title</th>
                   <th>Price</th>
                   <th>Discount</th>
@@ -200,7 +200,7 @@ const Products = () => {
                 {products.length > 0 ? (
                   products.map((p, index) => (
                     <tr key={p.id}>
-                      <td>{index + 1}</td>
+                      <td>{p.id}</td>
                       <td>{p.title}</td>
                       <td>₹{p.price}</td>
                       <td>₹{p.discountPrice}</td>
